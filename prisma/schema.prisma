@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  userId Int @id @default(autoincrement()) @map("user_id")
+  id String @unique
+  name String
+  password String
+  email String @unique
+  phone String @unique
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model board {
+  // 기본키, 자동으로 1씩 증대(기본키 사용할 때 많이 사용)
+  boardId Int @id @default(autoincrement()) @map("board_Id")
+  title String 
+  description String
+  author String
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+  // ?는 있어도 되고 없어도 됨. NULL값도 가능함. 
+  // @Uniuqe 중복이 불가
+  // @relation(=join, field, reference가 들어감) mySQL은 관계형 데이터베이스
+  // @default: 기본값 설정
+  // 테이블마다 필수 사항
+}
+// 1. npx prisma db push - db에 집어넣기
+// 2. >mysql -u root -phjhbattle123@ - sql 연결
+// 3. mysql> show databases; - 데이터 베이스 보기
+// 4. mysql> use mydb; - 안에 있는 데이터베이스(mydb)로 들어가기
+// 5. mysql> show tables; - mydb에 있는 테이블 보기
+// 6. mysql> desc board(테이블 이름) - 테이블 이름 안에 구조 보기
+// 7. npx prisma generate - db 구조 바뀔때
+// 1과 7은 세트 메뉴
