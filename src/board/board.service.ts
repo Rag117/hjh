@@ -19,6 +19,12 @@ export class BoardService {
 
     //where는 특정 조건 부여(원하는 것만 추출)
     async getBoardById(boardId: number){
+        // 조회수 증가 & 게시물을 반환
+        await this.prisma.board.update({
+            where: { boardId },
+            data: { views: { increment: 1 }}
+        });
+
         return await this.prisma.board.findMany({
             where: {boardId}
         })
@@ -38,6 +44,14 @@ export class BoardService {
     async deleteBoard(boardId: number){
         return await this.prisma.board.delete({
             where: {boardId}
+        })
+    }
+
+    // 좋아요 증가
+    async incrementLikes(boardId: number) {
+        return await this.prisma.board.update({
+            where: { boardId },
+            data: { likes: {increment: 1}}
         })
     }
 }

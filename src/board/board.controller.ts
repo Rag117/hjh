@@ -40,4 +40,9 @@ export class BoardController {
     async deleteBoard(@Body('boardId') boardId: number){
         return await this.boardService.deleteBoard(boardId)
     }
+
+    @Post('like/:boardId')
+    async likeBoard(@Param('boardId', ParseIntPipe) boardId: number){
+        return await this.boardService.incrementLikes(boardId);    
+    }
 }

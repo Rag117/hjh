@@ -17,4 +17,10 @@ export class RegisterUserDto {
 
     @IsString()
     phone: string
+
+    // npm -i -D @types/multer
+    // npm install @jestjs/platform-express multer
+
+    @IsString()
+    profileImage?: string; // 이미지의 경로 저장     
 }
